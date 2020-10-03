@@ -1,0 +1,29 @@
+{
+    "name": "標準差計算機",
+    "short_name": "標準差計算機",
+    "description": "標準差計算機，如你所想(就是簡單的輔助工具)",
+    "icons": [
+      {
+        "src": "/icon/icon64.png",
+        "sizes": "64x64"
+      },
+      {
+        "src": "/icon/icon128.png",
+        "sizes": "128x128"
+      },
+      {
+        "src": "/icon/icon256.png",
+        "sizes": "256x256"
+      },
+      {
+          "src": "/icon/icon512.png",
+          "sizes": "512x512"
+        }
+    ],
+    "start_url": "/index.html",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#ffffff",
+    "theme_color": "#cccccc",
+    "lang": "zh-Hant-TW"
+  }

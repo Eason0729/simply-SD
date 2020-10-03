@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta
+      name="description"
+      content="標準差計算機，如你所想(就是簡單的輔助工具)"
+    />
+    <link rel="manifest" href="/manifest.json" />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0,shrink-to-fit=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>標準差計算機</title>
+    <link rel="icon" type="image/svg+xml" href="calculate.svg" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <!--
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    -->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+    <script src="index.js" defer></script>
+    <link rel="stylesheet" href="index.css" />
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/sw.js", { scope: "/" })
+          .then(function (registration) {
+            // registration worked
+            console.log("Registration succeeded.");
+            registration.onupdatefound = function () {
+              registration.update();
+            };
+          })
+          .catch(function (error) {
+            // registration failed
+            console.log("Registration failed with " + error);
+          });
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+      <!-- Navbar content -->
+      <a class="navbar-brand" href="#">
+        <img
+          src="calculate.svg"
+          width="30"
+          height="30"
+          class="d-inline-block align-top white-icon"
+          alt="icon"
+          loading="lazy"
+        />
+        標準差計算機
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <div class="custom-control custom-switch">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="customSwitch1"
+          />
+          <label
+            class="custom-control-label"
+            for="customSwitch1"
+            data-toggle="collapse"
+            href="#multiCollapseExample1"
+            role="button"
+            aria-expanded="false"
+            aria-controls="multiCollapseExample1"
+            >進階設定</label
+          >
+        </div>
+        <div class="collapse multi-collapse" id="multiCollapseExample1">
+          <form onsubmit="return false">
+            <div class="form-row">
+              <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                <label for="formGroupExampleInput" id="end_fix">結尾詞</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="預設空白"
+                  id="end_val"
+                  aria-labelledby="end_fix"
+                />
+              </div>
+              <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="   "
+                  readonly
+                />
+              </div>
+            </div>
+          </form>
+          <hr />
+        </div>
+        <form onsubmit="return false">
+          <div class="form-row">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+              <label for="formGroupExampleInput" id="enter">數值</label>
+              <input
+                type="text"
+                class="form-control"
+                id="input_val"
+                placeholder="1.00..."
+                aria-labelledby="enter"
+              />
+            </div>
+          </div>
+        </form>
+        <hr />
+        <h4>
+          目前數值<span class="badge badge-success">
+            <span id="amount_"> 0 </span>
+          </span>
+        </h4>
+        <div id="refresh_"></div>
+        <div id="result_btn"></div>
+      </div>
+    </div>
+
+    <div
+      class="modal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="result_mod"
+      id="result_mod"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="result_mod">結算</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="mod_inp">
+            <p>標準差:</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

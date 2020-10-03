@@ -1,0 +1,19 @@
+.white-icon{
+    filter: invert(1);
+}
+.value_cap{
+    background-color: orange;
+    border-radius: 5px;
+    padding: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.thin-a{
+    padding: 0px;
+    margin: 6px;
+}
+html, body, .jumbotron
+{
+    width: 100%;
+    height: 100%;background-color:whitesmoke;
+}
